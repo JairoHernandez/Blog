@@ -1,0 +1,37 @@
+------What React Router Does------
+
+Blog$ npm install --save react-router-dom@4.0.0
+
+Refer to Diagram.
+    History is already running behind the scenes when you install react-router-dom@4.0.0. 
+    This installs a History library.
+    The whole diagram represents SPAs.
+
+------The Basics of React Router------
+
+BrowserRouter handles the history.
+
+src/index.js
+    import { BrowserRouter, Route } from 'react-router-dom';
+
+------Our First Route Definitionr------
+
+Because we are using react-router we no longer have a central single component going on so we have no need for components/app.js and it can be deleted.
+    sr/components/app.js
+        import App from './components/app'; // DELETE THIS ILNE AND IT'S components/app.js file!
+
+
+------State as an Object------
+The current route a user is looking at is really just another piece of state inside our application.
+
+We dont need that 'activePost' piece of state in the state since we simply pull it's ID out of the posts array.
+Since ths URL already reflects the post ID --> /posts/5 
+Then store POSTs inside an object and not an array as we have in the past.
+
+------Back to Redux - Index action------
+
+
+~/REACTmodern/Blog$ npm install --save axios redux-promise
+
+    src/index.js (add promise)
+        const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
