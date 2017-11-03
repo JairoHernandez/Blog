@@ -45,3 +45,53 @@ components/posts_index.js
     export default connect(null, { fetchPosts })(PostIndex);
 
 From the Chrome dev tool Network Tab select XHR to see ajax requests.
+
+------Rendernig a List of Posts------
+Beause ajax request to get data from API is asynchronous all componentDidMount cares about is when
+the DOM has loaded. IT doesnt care if the data is back and promised/resolved. This is why you first
+get an empty object back. Once the ajax async requests completes and resolves promise action Creator
+is then called again and this is when the object populates with data.
+
+src/components/posts_index.js
+    // Executes right after component is loaded in the DOM.
+        componentDidMount() {
+            this.props.fetchPosts();
+        }
+
+------React Router Gotcha------
+Why are we seeing all components on the the screen and not justs /posts/new?
+It's loading the root page because /posts/new also contains that first slash /.
+React router does a "loose" match.
+
+Solution is to use Switch. Most speficic match should be at the top of component Switch list.
+
+index.js
+    import { BrowserRouter, Route, switch } from 'react-router-dom';
+
+    <Switch>
+          <Route path="/posts/new" component={PostsNew} />
+          <Route path="/" component={PostsIndex} />
+    </Switch>
+
+------Navigation with the Link Component------
+
+Have React fetch link as a component and  not traditional HTML <a> tag links because that will 
+fetch a full document from server.
+
+components/posts_index.js
+    <Link className="btn btn-primary" to="/posts/new">
+        Add a Post
+    </Link>
+
+------Redux Form------
+
+redux-form.com is awesome it shows you how to do validation and React widgets so check it out.
+From the site follow the steps to install it.
+
+The form produces state that is being rendered on the screen so you need to use reducer.
+At end of the day redux-form is saving us time from having to write a buch of action creators.
+It's still fine to write them if you want too though.
+
+reducers/index.js
+    // Redux-form recommends using alias since term 'reducer' is too causual
+    import { reducer as formReducer} from 'redux-form'; 
