@@ -29,9 +29,19 @@ Since ths URL already reflects the post ID --> /posts/5
 Then store POSTs inside an object and not an array as we have in the past.
 
 ------Back to Redux - Index action------
-
-
 ~/REACTmodern/Blog$ npm install --save axios redux-promise
 
     src/index.js (add promise)
         const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
+
+------Implementing Posts Reducer------
+stephengrider.github.io/JSPlaygrounds/
+
+------Action Creator Shortcuts------
+
+components/posts_index.js
+    // Shortcut to avoid use of mapDispatchToProps is by just passing in {fetchPosts}
+    // If you require say a computation then you can then bring back use of mapDispatchToProps.
+    export default connect(null, { fetchPosts })(PostIndex);
+
+From the Chrome dev tool Network Tab select XHR to see ajax requests.
