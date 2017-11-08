@@ -95,3 +95,44 @@ It's still fine to write them if you want too though.
 reducers/index.js
     // Redux-form recommends using alias since term 'reducer' is too causual
     import { reducer as formReducer} from 'redux-form'; 
+
+------Setting up Redux Form------
+
+- Title, Categories, and Contents are all pieces of form state.
+For each piece of state create a 'Field' component. A 'Field' component is created by Redux form for us.
+All we have to tell the field is what type of input we want to receive from the user(radio button, checkbox,
+text input, file input).
+
+    components/posts_new.js
+        import { Field, reduxForm } from 'redux-form';
+
+    'reduxForm' is similar to 'connect' helper used to 'connect' Redux with React.
+
+- Redux form automatically handles changes(remember onChange(), setState(), action creator? It will take care of that).
+- Validates inputs and handles form submittal. This is when ReduxForm hands control back to us to do whatever
+we want it like saving it to our backend server.
+
+------The Field Component------
+
+'Field' component only knows how to interact with ReduxForm.
+You instead have to write a function that returns some amount of JSX so that it 
+can show to screen.
+
+TIP: You provide the function without () because at some point in the future the 
+<Field /> component will call it for us.
+
+    components/posts_new.js
+        // field parameter is necessary to know JSX is destined for <Field/> component
+        // {...field.input} equivalent
+            // onChange={filed.input.onChange}
+            // onFocus={filed.input.onFocus}
+            // onBlur={filed.input.onBlur}
+            renderTitleField(field) { 
+                return (
+                    <div>
+                        <input 
+                            {...field.input}
+
+        <Field
+            component={this.renderTitleField}
+        />

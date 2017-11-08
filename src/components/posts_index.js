@@ -6,9 +6,10 @@ import { Link } from 'react-router-dom';
 
 class PostIndex extends Component {
     
-    // Executes right after component is loaded in the DOM. 
-    // Will be empty at first since async ajax request promise/resolve has not completed yet.
+    // Executes right after component is loaded in the DOM. It then calls action creator again.
+    // Data be empty at first ajax call since async ajax request promise/resolve has not completed yet.
     componentDidMount() {
+        //console.log('componentDidMount');
         this.props.fetchPosts();
     }
 
