@@ -188,9 +188,23 @@ That is still our responsiblity thus we need to write some code for onSubmit
         <form onSubmit={}>
 
 ------Form and Field States------
+
 field.meta.touched will prevent the error messages of the fields
 from appearing on the screen after a fresh page load.
 Look at the pristine/touched/invalid diagram.
 
     components/posts_new.js
         {field.meta.touched ? field.meta.error : ''}
+
+------Conditional Styling------
+
+const { meta: { touched, error } } = field; // Cray destructure --> touched = field.meta.touched and error = field.meta.error.
+
+------Create Post Action Creator------
+
+Remember you ALWAYS need an action creator to reach out to an API to POST.
+Tie in Post state to redux-form
+    components/posts_new.js
+        (
+            connect(null, { createPost })(PostsNew)
+        );

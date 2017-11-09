@@ -1,0 +1,4 @@
+/*Look for anchor tag inside of a form.*/
+form a {
+    margin-left: 5px;
+}

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createPost } from '../actions';
 
 class PostsNew extends Component {
     // field parameter is necessary to know JSX is destined for <Field/> component
@@ -9,22 +12,29 @@ class PostsNew extends Component {
         // onBlur={filed.input.onBlur}
     // <label> was previously hardcoded but now with DRY you can use {field.label}
     renderField(field) { // field input represents single piece of state
+        
+        const { meta: { touched, error } } = field; //  Cray destructure --> touched = field.meta.touched and error = field.meta.error.
+        const className = `form-group ${touched && error ? 'has-danger' : ''}`;
+
         return (
-            <div className="form-group">
+            <div className={className}>
                 <label>{field.label}</label>
                 <input
                     className="form-control"
                     type="text"
                     {...field.input}
                 />
-                {field.meta.touched ? field.meta.error : ''}
+                <div className="text-help">
+                    {touched ? error : ''}
+                </div>
             </div>
         )
     }
 
     onSubmit(values) {
         // this === component
-        console.log(values);
+        // console.log(values);
+        this.props.createPost(values);
     }
 
     render() {
@@ -57,6 +67,7 @@ class PostsNew extends Component {
                     component={this.renderField}
                 />
                 <button type="submit" className="btn btn-primary">Submit</button>
+                <Link to="/" className="btn btn-danger">Cancel</Link>
             </form>
         );
     }
@@ -94,4 +105,6 @@ export default reduxForm({
     // VERY CRITICAL that the string assigned to form property is unique to not interfere
     // with multiple forms.
     form: 'PostNewForm' 
-})(PostsNew);
+})(
+    connect(null, { createPost })(PostsNew)
+);
