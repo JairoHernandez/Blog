@@ -127,7 +127,7 @@ TIP: You provide the function without () because at some point in the future the
             // onChange={filed.input.onChange}
             // onFocus={filed.input.onFocus}
             // onBlur={filed.input.onBlur}
-            renderTitleField(field) { 
+            renderField(field) { // field input represents single piece of state 
                 return (
                     <div>
                         <input 
@@ -136,3 +136,61 @@ TIP: You provide the function without () because at some point in the future the
         <Field
             component={this.renderTitleField}
         />
+
+------Generalizing Fields------
+Great example of DRY.
+
+    components/posts_new.js
+        renderField(field) { 
+            return (
+                <div className="form-group">
+                    <label>{field.label}</label> // Was previously hard coded, but not now thanks to DRY {field.label}.
+                    <input
+                        className="form-control"
+                        type="text"
+                        {...field.input}
+                    />
+                </div>
+            )
+        }
+
+------Validating Forms------
+reduxForm does this automatically it's great.
+
+------Showing Errors to Users------
+
+components/posts_new.js
+    {field.meta.error}
+
+// Validate the inputs from 'values'. It checks 'name' property from <Field /> component. 
+
+    if (!values.title || values.title < 3) {
+        errors.title = "Enter a title with at least 3 characters!";
+    }
+
+    if (!values.categories) {
+        errors.categories = "Enter some categories.";
+    }
+
+    if (!values.content) {
+        errors.content = "Enter some content please.";
+    }
+
+------Handling Form Submittal------
+
+REMEMBER REDUX STATE HANDLES THE STATE OF OUR FORM.
+THE VLAUES OF IT and  VALIDATION.
+    
+It does not handle posting data to some backend server.
+That is still our responsiblity thus we need to write some code for onSubmit
+
+    components/posts_new.js
+        <form onSubmit={}>
+
+------Form and Field States------
+field.meta.touched will prevent the error messages of the fields
+from appearing on the screen after a fresh page load.
+Look at the pristine/touched/invalid diagram.
+
+    components/posts_new.js
+        {field.meta.touched ? field.meta.error : ''}
