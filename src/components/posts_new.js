@@ -34,7 +34,9 @@ class PostsNew extends Component {
     onSubmit(values) {
         // this === component
         // console.log(values);
-        this.props.createPost(values);
+        this.props.createPost(values, () => {
+            this.props.history.push('/'); // Goes back to root page of after form submits.
+        });
     }
 
     render() {

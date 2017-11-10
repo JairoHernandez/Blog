@@ -208,3 +208,50 @@ Tie in Post state to redux-form
         (
             connect(null, { createPost })(PostsNew)
         );
+
+------Navigation Through Callbacks------
+Go back to root page of posts listing after form submits.
+
+    components/posts_new.js
+        this.props.createPost(values, () => {
+                this.props.history.push('/'); // Goes back to root page of after form submits.
+    });
+
+    actions/index.js
+        const request = axios.post(`${ROOT_URL}/posts${API_KEY}`, values).then(() => callback());
+
+------The Posts Show Component------
+
+Hard thing is trying to find a post based on id.
+
+    src/index.js
+        // :id from /posts/:id is a wildcard match so place it after /posts/new 
+        // because if you put it first it will match everything that comes in.
+
+        <Route path="/posts/:id" component={PostsShow} />
+    
+------Receiving new posts.------
+
+    reducers/reducer_posts/js
+        /** ES6 equivalent */
+        // return { something } means it returns the full object
+        // console.log('...state:', { ...state); // Empty object
+        // console.log('action.payload.data:', action.payload.data);
+        return { ...state, [action.payload.data.id]: action.payload.data }; // [action.paylod.data.id] is not an array it's actual name of the key.
+
+------Data Dependencies------
+
+    components/posts_show.js
+        if (!post) {
+                return (<div>Loading...</div>);
+        }
+
+------Caching Records------
+
+    components/posts_show.js
+        /** For caching performance if you dont want to refetch the post everytime you 
+         *  click on is from root page then move the previous 2 lines into 
+         *  
+         *  if (!this.props.post) { // Means if we already have a post.
+         *  }
+         * */
