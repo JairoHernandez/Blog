@@ -2,6 +2,7 @@
 API Blog link to see json structure.
 https://reduxblog.herokuapp.com/
 
+Check out https://rallycoding.com/
 
 ------What React Router Does------
 
