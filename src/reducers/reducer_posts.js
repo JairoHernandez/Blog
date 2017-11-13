@@ -1,9 +1,18 @@
 import _ from 'lodash';
-import { FETCH_POSTS, FETCH_POST } from '../actions';
+import { FETCH_POSTS, FETCH_POST, DELETE_POST } from '../actions';
 
 // Will default our state to be an object(aka object with posts).
 export default function(state={}, action) {
     switch(action.type){
+        case DELETE_POST:
+            return _.omit(state, action.payload);
+            /** Better than using an array for state because we would 
+             * have to write this instead.
+             * 
+             * return _.reject(state, post => === action.payload)
+             * 
+             *  that's why object for application level state looks cleaner.
+             * this also speeds up the Deletion. */
         case FETCH_POST:
             /** ES5 way */
             // const post = action.payload.data;

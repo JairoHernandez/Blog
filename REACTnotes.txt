@@ -1,3 +1,8 @@
+
+API Blog link to see json structure.
+https://reduxblog.herokuapp.com/
+
+
 ------What React Router Does------
 
 Blog$ npm install --save react-router-dom@4.0.0
@@ -255,3 +260,16 @@ Hard thing is trying to find a post based on id.
          *  if (!this.props.post) { // Means if we already have a post.
          *  }
          * */
+
+------Wrap Up------
+
+reducers/reducre_posts.js
+    case DELETE_POST:
+        return _.omit(state, action.payload);
+        /** Better than using an array for state because we would 
+            * have to write this instead.
+            * 
+            * return _.reject(state, post => === action.payload)
+            * 
+            *  that's why object for application level state looks cleaner.
+            * this also speeds up the Deletion. */
