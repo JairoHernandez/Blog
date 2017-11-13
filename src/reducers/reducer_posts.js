@@ -23,6 +23,7 @@ export default function(state={}, action) {
             // return { something } means it returns the full object
             // console.log('...state:', { ...state); // Empty object
             // console.log('action.payload.data:', action.payload.data);
+            // BEcause [action.payload.data.id]: action.payload.data appears to the right of ...state it will OVERWRITE the post matching [action.payload.data.id].
             return { ...state, [action.payload.data.id]: action.payload.data }; // [action.paylod.data.id] is not an array it's actual name of the key.
 
         case FETCH_POSTS:
